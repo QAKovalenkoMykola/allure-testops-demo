@@ -1,0 +1,28 @@
+name: Run Tests
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '9.0.x'
+    
+    - name: Restore dependencies
+      run: dotnet restore allure-testops-demo/allure-testops-demo.csproj
+    
+    - name: Build
+      run: dotnet build allure-testops-demo/allure-testops-demo.csproj --no-restore
+    
+    - name: Test
+      run: dotnet test allure-testops-demo/allure-testops-demo.csproj --no-build --verbosity normal
