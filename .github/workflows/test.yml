@@ -29,17 +29,17 @@ jobs:
       
     - name: Zip Allure results
       run: |
-        cd allure-testops-demo/bin/Debug/net9.0/allure-results
-        zip -r ../allure-results.zip ./*
+        zip -r allure-testops-demo/bin/Debug/net9.0/allure-results.zip allure-testops-demo/bin/Debug/net9.0/allure-results/* -x "*.DS_Store"
       shell: bash
 
+    - name: Check zip size
+      run: ls -lh allure-testops-demo/bin/Debug/net9.0/allure-results.zip
+    
     - name: Upload Allure results to TestOps
-      env:
-        ALLURE_TOKEN: 0306cc1f-461b-4ff2-aee3-1ff26bc00ded
       run: |
         cd allure-testops-demo/bin/Debug/net9.0
         curl -X POST "https://kovalenkomykola.testops.cloud/api/rs/testresult" \
           -H "Authorization: Api-Token 0306cc1f-461b-4ff2-aee3-1ff26bc00ded" \
           -F "projectId=1" \
-          -F "files[]=@allure-results.zip"
+          -F "files[]=@allure-testops-demo/bin/Debug/net9.0/allure-results.zip"
       shell: bash
