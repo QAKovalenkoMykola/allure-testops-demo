@@ -36,20 +36,24 @@ jobs:
       run: |
         ls -lh ./allure-testops-demo/bin/Debug/net9.0/allure-results
         cat ./allure-testops-demo/bin/Debug/net9.0/allure-results/*
-        
+  
     # Install Allure CLI
     - name: Install Allure CLI
       run: |
         curl -o allurectl https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64
         chmod +x allurectl
         sudo mv allurectl /usr/local/bin/allurectl
-        
-    # Send results to Allure TestOps
-    - name: Upload Allure results to TestOps
+
+    # Run tests with Allure TestOps watch
+    - name: Run tests and send results to Allure TestOps
       run: |
-        allurectl watch \
-          --endpoint https://kovalenkomykola.testops.cloud \
-          --project-id 1 \
-          --token "0306cc1f-461b-4ff2-aee3-1ff26bc00ded" \
-          --launch-name "Local PC manual launch 2200-12-31" \
-          ./allure-testops-demo/bin/Debug/net9.0/allure-results
+        export ALLURE_ENDPOINT=https://kovalenkomykola.testops.cloud
+        export ALLURE_TOKEN=0306cc1f-461b-4ff2-aee3-1ff26bc00ded
+        export ALLURE_PROJECT_ID=1
+        export ALLURE_LAUNCH_NAME="GitHub Actions launch"
+        export ALLURE_RESULTS=allure-testops-demo/bin/Debug/net9.0/allure-results
+
+        allurectl watch -- dotnet test allure-testops-demo/allure-testops-demo.csproj \
+          --logger:"console;verbosity=detailed" \
+          --no-build \
+          /p:AllureResultsDirectory=$ALLURE_RESULTS
