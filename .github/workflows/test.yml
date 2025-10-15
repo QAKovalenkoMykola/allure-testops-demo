@@ -26,21 +26,19 @@ jobs:
     
     - name: Test
       run: dotnet test allure-testops-demo/allure-testops-demo.csproj --logger:"console;verbosity=detailed" --no-build --verbosity normal
-      
-    - name: Zip Allure results
+        
+    # Install Allure CLI
+    - name: Install Allure CLI
       run: |
-        cd allure-testops-demo/bin/Debug/net9.0/allure-results
-        zip -r ../allure-results.zip ./* -x "*.DS_Store"
-      shell: bash
-
-    - name: Check zip size
-      run: ls -lh allure-testops-demo/bin/Debug/net9.0/allure-results.zip
-
+        curl -o allurectl https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64
+        chmod +x allurectl
+        sudo mv allurectl /usr/local/bin/allurectl
+        
+    # Send results to Allure TestOps
     - name: Upload Allure results to TestOps
       run: |
-        curl -X POST "https://kovalenkomykola.testops.cloud/api/rs/testresult" \
-          -H "Authorization: Api-Token 0306cc1f-461b-4ff2-aee3-1ff26bc00ded" \
-          -F "projectId=1" \
-          -F "files[]=@allure-testops-demo/bin/Debug/net9.0/allure-results.zip"
-      shell: bash
-    
+        allurectl send \
+          --host "https://kovalenkomykola.testops.cloud" \
+          --project "1" \
+          --token "0306cc1f-461b-4ff2-aee3-1ff26bc00ded" \
+          --results "./allure-testops-demo/bin/Debug/net9.0/allure-results"
