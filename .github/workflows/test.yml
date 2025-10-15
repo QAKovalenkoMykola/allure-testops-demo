@@ -32,6 +32,11 @@ jobs:
           /p:AllureResultsDirectory=allure-testops-demo/bin/Debug/net9.0/allure-results
       shell: bash
         
+    - name: Check Allure results after tests
+      run: |
+        ls -lh ./allure-testops-demo/bin/Debug/net9.0/allure-results
+        cat ./allure-testops-demo/bin/Debug/net9.0/allure-results/*
+        
     # Install Allure CLI
     - name: Install Allure CLI
       run: |
