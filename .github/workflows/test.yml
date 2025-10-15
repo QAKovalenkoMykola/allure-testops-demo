@@ -35,7 +35,7 @@ jobs:
       
     - name: Upload Allure results
       run: |
-        for file in bin/Debug/net9.0/allure-results/*; do
+        for file in allure-testops-demo/bin/Debug/net9.0/allure-results/*; do
           curl -X POST "https://kovalenkomykola.testops.cloud/api/rs/testresult" \
             -H "Authorization: Api-Token 0306cc1f-461b-4ff2-aee3-1ff26bc00ded" \
             -F "projectId=1" \
