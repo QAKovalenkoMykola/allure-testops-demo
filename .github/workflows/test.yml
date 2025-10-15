@@ -25,7 +25,7 @@ jobs:
       run: dotnet build allure-testops-demo/allure-testops-demo.csproj --no-restore
     
     - name: Test
-      run: dotnet test allure-testops-demo/allure-testops-demo.csproj --no-build --verbosity normal --logger:"console;verbosity=detailed"
+      run: dotnet test allure-testops-demo/allure-testops-demo.csproj --logger:"console;verbosity=detailed" --no-build --verbosity normal
       
     - name: Upload Allure results
       run: |

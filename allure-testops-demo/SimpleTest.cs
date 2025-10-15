@@ -1,14 +1,15 @@
 using NUnit.Allure.Attributes;
+using NUnit.Allure.Core;
 using NUnit.Framework;
 
 namespace AllureTestOpsDemo
 {
-    [TestFixture]
+    [AllureNUnit]
     public class SimpleTest
     {
-        [Test(Description = "Check successful login")]
         [AllureTag("smoke")]
         [AllureOwner("Mykola")]
+        [Test(Description = "Check successful login")]
         public void TestAssertTrue()
         {
             Assert.That(true, Is.True);
