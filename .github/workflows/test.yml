@@ -49,6 +49,6 @@ jobs:
       run: |
         allurectl watch \
           --host "https://kovalenkomykola.testops.cloud" \
-          --project "1" \
+          --project-id "1" \
           --token "0306cc1f-461b-4ff2-aee3-1ff26bc00ded" \
           --results "./allure-testops-demo/bin/Debug/net9.0/allure-results"
