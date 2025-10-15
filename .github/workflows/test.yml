@@ -29,6 +29,8 @@ jobs:
       
     - name: Upload Allure results
       run: |
-        curl -X POST "https://kovalenkomykola.testops.cloud/api/rs/projects/1/results" \
+        curl -X POST "https://kovalenkomykola.testops.cloud/api/rs/testresult" \
         -H "Authorization: Api-Token 0306cc1f-461b-4ff2-aee3-1ff26bc00ded" \
-        -F "files[]=@bin/Debug/net8.0/allure-results"
+        -H "Content-Type: multipart/form-data" \
+        -F "files[]=@bin/Debug/net8.0/allure-results" \
+        -F "projectId=1" \
