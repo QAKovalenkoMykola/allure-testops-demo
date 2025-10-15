@@ -25,7 +25,12 @@ jobs:
       run: dotnet build allure-testops-demo/allure-testops-demo.csproj --no-restore
     
     - name: Test
-      run: dotnet test allure-testops-demo/allure-testops-demo.csproj --logger:"console;verbosity=detailed" --no-build --verbosity normal
+      run: dotnet test \
+        --logger:"console;verbosity=detailed" \
+        --no-build \
+        /p:CollectCoverage=true \
+        /p:CoverletOutputFormat=opencover \
+        /p:AllureResultsDirectory=bin/Debug/net9.0/allure-results
         
     # Install Allure CLI
     - name: Install Allure CLI
