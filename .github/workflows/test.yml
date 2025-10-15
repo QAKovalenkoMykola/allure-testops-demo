@@ -29,7 +29,8 @@ jobs:
       
     - name: Zip Allure results
       run: |
-        zip -r allure-testops-demo/bin/Debug/net9.0/allure-results.zip allure-testops-demo/bin/Debug/net9.0/allure-results/* -x "*.DS_Store"
+        cd allure-testops-demo/bin/Debug/net9.0/allure-results
+        zip -r ../allure-results.zip ./* -x "*.DS_Store"
       shell: bash
 
     - name: Check zip size
@@ -42,3 +43,4 @@ jobs:
           -F "projectId=1" \
           -F "files[]=@allure-testops-demo/bin/Debug/net9.0/allure-results.zip"
       shell: bash
+    
