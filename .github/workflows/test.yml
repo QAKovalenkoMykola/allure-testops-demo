@@ -47,7 +47,7 @@ jobs:
     # Send results to Allure TestOps
     - name: Upload Allure results to TestOps
       run: |
-        allurectl send \
+        allurectl upload \
           --host "https://kovalenkomykola.testops.cloud" \
           --project "1" \
           --token "0306cc1f-461b-4ff2-aee3-1ff26bc00ded" \
