@@ -25,4 +25,10 @@ jobs:
       run: dotnet build allure-testops-demo/allure-testops-demo.csproj --no-restore
     
     - name: Test
-      run: dotnet test allure-testops-demo/allure-testops-demo.csproj --no-build --verbosity normal
+      run: dotnet test allure-testops-demo/allure-testops-demo.csproj --no-build --verbosity normal --logger:"console;verbosity=detailed"
+      
+    - name: Upload Allure results
+      run: |
+        curl -X POST "https://kovalenkomykola.testops.cloud/api/rs/projects/1/results" \
+        -H "Authorization: Api-Token 0306cc1f-461b-4ff2-aee3-1ff26bc00ded" \
+        -F "files[]=@bin/Debug/net8.0/allure-results"
