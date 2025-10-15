@@ -27,6 +27,9 @@ jobs:
     - name: Test
       run: dotnet test allure-testops-demo/allure-testops-demo.csproj --logger:"console;verbosity=detailed" --no-build --verbosity normal
       
+    - name: List allure results
+      run: ls -R bin/Debug/net9.0/allure-results || echo "No allure results found"
+      
     - name: Upload Allure results
       run: |
         for file in bin/Debug/net9.0/allure-results/*; do
